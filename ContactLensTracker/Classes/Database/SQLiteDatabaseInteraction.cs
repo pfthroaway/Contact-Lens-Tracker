@@ -49,7 +49,7 @@ namespace Contacts.Classes.Database
         public async Task<List<Contact>> LoadContacts()
         {
             List<Contact> allContacts = new List<Contact>();
-            DataSet ds = await SQLite.FillDataSet("SELECT * FROM Contacts", _con);
+            DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Contacts");
             if (ds.Tables[0].Rows.Count > 0)
             {
                 allContacts.AddRange(from DataRow dr in ds.Tables[0].Rows select new Contact(DateTimeHelper.Parse(dr["Date"]), EnumHelper.Parse<Side>(dr["Side"].ToString())));
