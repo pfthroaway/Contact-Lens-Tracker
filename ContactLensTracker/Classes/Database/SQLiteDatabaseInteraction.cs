@@ -35,11 +35,12 @@ namespace Contacts.Classes.Database
         {
             SQLiteCommand cmd = new SQLiteCommand
             {
-                CommandText = "INSERT INTO Contacts([Date], [Side])" +
-                              "VALUES(@date, @side)"
+                CommandText = "INSERT INTO Contacts([Date], [Side], [ReplacementDate])" +
+                              "VALUES(@date, @side, @replacementDate)"
             };
             cmd.Parameters.AddWithValue("@date", newContact.DateToString);
             cmd.Parameters.AddWithValue("@side", newContact.SideToString);
+            cmd.Parameters.AddWithValue("@replacementDate", newContact.ReplacementDateToString);
 
             return await SQLite.ExecuteCommand(_con, cmd);
         }
@@ -52,7 +53,7 @@ namespace Contacts.Classes.Database
             DataSet ds = await SQLite.FillDataSet(_con, "SELECT * FROM Contacts");
             if (ds.Tables[0].Rows.Count > 0)
             {
-                allContacts.AddRange(from DataRow dr in ds.Tables[0].Rows select new Contact(DateTimeHelper.Parse(dr["Date"]), EnumHelper.Parse<Side>(dr["Side"].ToString())));
+                allContacts.AddRange(from DataRow dr in ds.Tables[0].Rows select new Contact(DateTimeHelper.Parse(dr["Date"]), EnumHelper.Parse<Side>(dr["Side"].ToString()), DateTimeHelper.Parse(dr["ReplacementDate"])));
                 allContacts = allContacts.OrderByDescending(contact => contact.Date)
                     .ThenBy(contact => contact.SideToString).ToList();
             }

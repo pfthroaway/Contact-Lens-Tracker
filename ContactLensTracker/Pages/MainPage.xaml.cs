@@ -19,8 +19,23 @@ namespace Contacts.Pages
         /// <param name="sides">Sides on which contacts are being added</param>
         private async void NewContact(params Side[] sides)
         {
+            DateTime replacementDate = DateTimeHelper.Parse(DateNewContact.SelectedDate);
+            switch (CmbLength.SelectedItem.ToString())
+            {
+                case "1 week":
+                    replacementDate = replacementDate.AddDays(7);
+                    break;
+
+                case "2 weeks":
+                    replacementDate = replacementDate.AddDays(14);
+                    break;
+
+                case "30 days":
+                    replacementDate = replacementDate.AddDays(30);
+                    break;
+            }
             foreach (Side side in sides)
-                await AppState.AddContact(new Contact(DateTimeHelper.Parse(DateNewContact.SelectedDate), side));
+                await AppState.AddContact(new Contact(DateTimeHelper.Parse(DateNewContact.SelectedDate), side, replacementDate));
             RefreshItemsSource();
         }
 
@@ -59,6 +74,10 @@ namespace Contacts.Pages
         {
             InitializeComponent();
             DateNewContact.SelectedDate = DateTime.Today;
+            CmbLength.Items.Add("1 week");
+            CmbLength.Items.Add("2 weeks");
+            CmbLength.Items.Add("30 days");
+            CmbLength.SelectedIndex = 0;
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e) => AppState.CalculateScale(Grid);

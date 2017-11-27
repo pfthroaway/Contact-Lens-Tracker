@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ListView x:Name="LVContacts" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Height="450" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" AlternationCount="2" Margin="0,0,0,10">
             <ListView.View>
@@ -31,12 +32,20 @@
                             <GridViewColumnHeader Tag="Side" Click="LVContactsColumnHeader_Click" Content="Side" />
                         </GridViewColumn.Header>
                     </GridViewColumn>
+                    <GridViewColumn Width="175" DisplayMemberBinding="{Binding Path=ReplacementDateToString}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="ReplacementDate" Click="LVContactsColumnHeader_Click" Content="Replacement Date" />
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <DatePicker x:Name="DateNewContact" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="200" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDateChanged="DateNewContact_SelectedDateChanged" Margin="0,0,10,10" />
-        <Button x:Name="BtnAddLeft" Grid.Column="0" Grid.Row="2" Width="125" Content="Add _Left" Click="BtnAddLeft_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnAddRight" Grid.Column="1" Grid.Row="2" Width="125" Content="Add _Right" Click="BtnAddRight_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
-        <Button x:Name="BtnAddBoth" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width="125" Content="Add Both" Click="BtnAddBoth_Click" IsEnabled="False" IsDefault="True" />
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="Insertion Date:" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <DatePicker x:Name="DateNewContact" Grid.Column="1" Grid.Row="1" Width="200" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedDateChanged="DateNewContact_SelectedDateChanged" Margin="0,0,0,10" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="Replace in:" TextAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10" />
+        <ComboBox x:Name="CmbLength" Grid.Column="1" Grid.Row="2" Width="200" Margin="0,0,0,10" />
+        <Button x:Name="BtnAddLeft" Grid.Column="0" Grid.Row="3" Width="145" Content="Add _Left" Click="BtnAddLeft_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
+        <Button x:Name="BtnAddRight" Grid.Column="1" Grid.Row="3" Width="145" Content="Add _Right" Click="BtnAddRight_Click" IsEnabled="False" IsDefault="True" Margin="0,0,0,10" />
+        <Button x:Name="BtnAddBoth" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Width="145" Content="Add Both" Click="BtnAddBoth_Click" IsEnabled="False" IsDefault="True" />
     </Grid>
 </Page>

@@ -7,7 +7,7 @@ namespace Contacts.Classes.Entities
     /// <summary>Represents a contact lens.</summary>
     internal class Contact
     {
-        private DateTime _date;
+        private DateTime _date, _replacementDate;
         private Side _side;
 
         #region Modifying Properties
@@ -21,6 +21,18 @@ namespace Contacts.Classes.Entities
                 _date = value;
                 OnPropertyChanged("Date");
                 OnPropertyChanged("DateToString");
+            }
+        }
+
+        /// <summary>Date on which the contact was inserted.</summary>
+        public DateTime ReplacementDate
+        {
+            get => _replacementDate;
+            set
+            {
+                _replacementDate = value;
+                OnPropertyChanged("ReplacementDate");
+                OnPropertyChanged("ReplacementDateToString");
             }
         }
 
@@ -42,6 +54,9 @@ namespace Contacts.Classes.Entities
         /// <summary>Date on which the contact was inserted, formatted.</summary>
         public string DateToString => Date.ToString("yyyy/MM/dd");
 
+        /// <summary>Date on which the contact was inserted, formatted.</summary>
+        public string ReplacementDateToString => ReplacementDate.ToString("yyyy/MM/dd");
+
         /// <summary>Side on which the contact was inserted, formatted.</summary>
         public string SideToString => Side.ToString();
 
@@ -62,7 +77,7 @@ namespace Contacts.Classes.Entities
         {
             if (ReferenceEquals(null, left) && ReferenceEquals(null, right)) return true;
             if (ReferenceEquals(null, left) ^ ReferenceEquals(null, right)) return false;
-            return DateTime.Equals(left.Date, right.Date) && left.Side == right.Side;
+            return DateTime.Equals(left.Date, right.Date) && left.Side == right.Side && DateTime.Equals(left.ReplacementDate, right.ReplacementDate);
         }
 
         public override bool Equals(object obj) => Equals(this, obj as Contact);
@@ -89,15 +104,16 @@ namespace Contacts.Classes.Entities
         /// <summary>Initializes an instance of Contact by assigning Properties.</summary>
         /// <param name="date">Date on which the contact was inserted.</param>
         /// <param name="side">Side on which the contact was inserted.</param>
-        public Contact(DateTime date, Side side)
+        public Contact(DateTime date, Side side, DateTime replacementDate)
         {
             Date = date;
             Side = side;
+            ReplacementDate = replacementDate;
         }
 
         /// <summary>Replaces this instance of Contact with another instance</summary>
         /// <param name="other">Contact to replace this instance</param>
-        public Contact(Contact other) : this(other.Date, other.Side)
+        public Contact(Contact other) : this(other.Date, other.Side, other.ReplacementDate)
         {
         }
 
